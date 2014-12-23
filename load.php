@@ -9,5 +9,6 @@ foreach(explode('/',$_SERVER['PHP_SELF']) as $baseV){
 	if($baseV == 'load.php')
 		$ck = true;
 }
-print_r($url);
+include 'lib/LibBoot.php';
+$boot = new LibBoot($url);
 ?>
