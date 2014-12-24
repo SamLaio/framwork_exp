@@ -51,18 +51,12 @@ class LibBoot {
 		}
 		//檢查function是否在coltrol中
 		if (method_exists($ControlObj, $url[1])) {
-			if(
-				(isset($data['get']) and count($data['get']) != 0) or
-				(isset($data['post']) and count($data['post']) != 0) or
-				$url[1] == 'getJs'
-			){
-				$ControlRet = $ControlObj->{$url[1]}($data);
+			if($data['get'] or $data['post'] or $url[1] == 'getJs'){
+				$ControlRet = $ControlObj->$url[1]($data);
 			}else{
-				$ControlRet = $ControlObj->{$url[1]}();
+				$ControlRet = $ControlObj->$url[1]();
 			}
 		}
-
-
 		/*control end*/
 
 		/*view start*/
@@ -73,23 +67,28 @@ class LibBoot {
 		/*view end*/
 	}
 
-	private function FileCk($arr, $file_name, $isFile = true) {
+	//尋找檔案是否在資料夾中($isFile是指是不是單純只有指檔案)
+	private function FileCk($FileArr, $FeileName, $isFile = true) {
 		$ret = 'error';
-		foreach ($arr as $value) {
-			if (substr($value, 0, strrpos($value, ".")) == $file_name and $isFile)
-				$ret = $file_name;
-			if($value == $file_name and !$isFile)
-				$ret = $file_name;
+		foreach ($FileArr as $value) {
+			if (substr($value, 0, strrpos($value, ".")) == $FeileName and $isFile)
+				$ret = $FeileName;
+			if($value == $FeileName and !$isFile)
+				$ret = $FeileName;
 		}
 		return $ret;
 	}
 
-	private function InDataCk($arr) {
-		$data = array();
-		foreach ($arr as $key => $value) {
-			$data[$key] = $this->CheckInput($value);
+	private function InDataCk($Indata = -1) {
+		if($Indata != -1){
+			$data = array();
+			foreach ($Indata as $key => $value) {
+				$data[$key] = $this->CheckInput($value);
+			}
+			return $data;
+		}else{
+			return false;
 		}
-		return $data;
 	}
 
 	private function CheckInput($Indata) {
