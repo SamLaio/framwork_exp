@@ -17,7 +17,7 @@ class LibBoot {
 				$url[0] = (!isset($url[0]) or $url[0] == '')?'index':$url[0];
 				$url[1] = (!isset($url[1]) or $url[1] == '')?'index':$url[1];
 			}
-			//是js，就建立url[1](如果url[2]存在就搬進去，沒有就用Jquery)
+			//是js，就建立url[1](如果url[1]存在就搬進去，沒有就用Jquery)
 			if($url[0] == 'js'){
 				$url[1] = (!isset($url[1]) or $url[1] == '')?'Jquery':$url[1];
 			}
@@ -41,7 +41,7 @@ class LibBoot {
 
 		//接control吐出來的資料
 		$ControlRet = array();
-		//資料替代
+		//傳入的資料替代
 		$data['get'] = $this->InDataCk($_GET);
 		$data['post'] = $this->InDataCk($_POST);
 		//include js
@@ -68,7 +68,7 @@ class LibBoot {
 		/*view start*/
 		if($view){
 			include "view/View.php";
-			$ViewObj = new View($url[0] .'/'.$view,$ControlRet);
+			$ViewObj = new View($control .'/'.$view,$ControlRet);
 		}
 		/*view end*/
 	}
@@ -92,13 +92,13 @@ class LibBoot {
 		return $data;
 	}
 
-	private function CheckInput($value) {
-		if (is_array($value)) {
-			foreach ($value as $key2 => $value2)
-				$value[$key2] = $this->CheckInput($value2);
+	private function CheckInput($Indata) {
+		if (is_array($Indata)) {
+			foreach ($Indata as $key => $value)
+				$Indata[$key] = $this->CheckInput($value);
 		} else {
-			$value = str_replace(array("&", "'", '"', "<", ">"), array('@&5', '@&1', '@&2', '@&3', '@&4'), $value);
+			$Indata = str_replace(array("&", "'", '"', "<", ">"), array('@&5', '@&1', '@&2', '@&3', '@&4'), $Indata);
 		}
-		return $value;
+		return $Indata;
 	}
 }
