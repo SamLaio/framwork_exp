@@ -13,12 +13,7 @@ class LibDataBase {
 				$this->dbuser = DbUser;
 				$this->dbpass = DbPw;
 				$this->dbname = DbName;
-			}/*else{
-				$this->dbhost = BDbHost;
-				$this->dbuser = BDbUser;
-				$this->dbpass = BDbPw;
-				$this->dbname = BDbName;
-			}*/
+			}
 		}
 		if ($this->dbtype == 'sqlite') {
 			$this->dbname = DbName;
@@ -69,6 +64,7 @@ class LibDataBase {
 	}
 	//共用function end
 	//語法組合
+
 	public function Select($table, $field, $req = false, $other = false) {
 		$table = $this->comb(',',$table);
 		$field = $this->comb(',', $field);
@@ -153,6 +149,7 @@ class LibDataBase {
 		}
 		return $arr;
 	}
+
 	protected function comb($sub2,$arr) {
 		$re = false;
 		if (is_array($arr)) {
@@ -183,8 +180,9 @@ class LibDataBase {
 	public function Json2Array($json) {
 		$ret = array();
 		foreach($json as $key => $val){
-			$ret[$key] =  (is_object($val) or is_array($val))?$this->Json2Array($val):$val;
+			$ret[$key] = (is_object($val) or is_array($val))?$this->Json2Array($val):$val;
 		}
 		return $ret;
 	}
 	/*共用函式*/
+}

@@ -9,16 +9,19 @@ if(!isset($_SESSION['SiteUrl'])){
 $url = explode('/',$UrlBase[1]);
 
 /*set data base info*/
+$DbType = 'mysql';
 $DbHost = '127.0.0.1';
 $DbUser = 'root';
 $DbPw = '';
 $DbName = 'framwork_exp';
 
+define('DbType',$DbType);
 define('DbHost', $DbHost);
 define('DbUser', $DbUser);
 define('DbPw', $DbPw);
 define('DbName', $DbName);
 /*set data base info*/
 
+include 'lib/LibDataBase.php';
 include 'lib/LibBoot.php';
 $boot = new LibBoot($url);
