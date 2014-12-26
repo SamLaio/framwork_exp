@@ -1,6 +1,7 @@
-#top {
+#top, #foot {
 	background-color:#000;
-}
-#top a {
 	color:#fff;
+}
+#top a, #foot a {
+	color:#9489F5;
 }
