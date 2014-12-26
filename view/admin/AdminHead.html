@@ -1,0 +1,12 @@
+<script>
+$(window).ready(function(){
+	$('#LogOut').on('click',function(){
+		$.post('<?php echo $_SESSION['SiteUrl'];?>cgi/admin/LogOut/',function(){
+			document.location.href='<?php echo $_SESSION['SiteUrl'];?>';
+		});
+	});
+});
+</script>
+<div id = 'AdminHead'>
+	[<sapn id = 'LogOut'>LogOut</span>]
+</div>

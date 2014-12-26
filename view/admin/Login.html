@@ -1,0 +1,39 @@
+<script>
+$(window).ready(function(){
+	$('#submit').on('click',function(){
+		if($('#acc').val() != '' && $('#pswd').val() != ''){
+			if($('#captcha').val() != ''){
+				$.post('<?php echo $_SESSION['SiteUrl'];?>cgi/captcha/ImgCheck',
+					{'captcha':$('#captcha').val()},
+					function(r){
+						if(r == 1){
+							$.post(
+								'<?php echo $_SESSION['SiteUrl']?>cgi/admin/Login',
+								{'acc':$('#acc').val(),'pswd':$('#pswd').val()},
+								function(e){
+									if(e==1){
+										document.location.href='<?php echo $_SESSION['SiteUrl'];?>admin/';
+									}else{
+										alert('error');
+									}
+								}
+							);
+						}else{
+							alert('Captcha is Error.');
+						}
+					}
+				);
+			}else{
+				alert('Captcha is Null.');
+			}
+		}else{
+			alert('Input Box have Error(s).');
+		}
+	});
+})
+</script>
+Account:<input type = 'text' id = 'acc' /><br />
+Password:<input type = 'password' id = 'pswd' /><br />
+<img src = '<?php echo $_SESSION['SiteUrl']?>cgi/captcha/ImgPut' />
+<input id = 'captcha' />
+[<span id = 'submit'>Submit</span>]

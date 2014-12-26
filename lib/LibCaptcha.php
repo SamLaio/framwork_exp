@@ -14,19 +14,19 @@
 			return $text;
 		}
 		public function CreateImg($num){
-			// 產生種子, 作圖形干擾用
+			/*產生種子, 作圖形干擾用*/
 			srand((double)microtime()*10000000000);
 
-			// 產生圖檔, 及定義顏色
+			/*產生圖檔, 及定義顏色*/
 			$img_x = 120;
 			$img_y = 28;
 			$im = imageCreate($img_x, $img_y);
-			//ImageColorAllocate 分配圖形的顏色
+			/*ImageColorAllocate 分配圖形的顏色*/
 			$back = ImageColorAllocate($im, rand(200,255), rand(200,255), rand(200,255));
 
 			$authText=$this->num2adb($num);
 			imageFill($im, 0, 0, $back);
-			// imageString($im, 5, rand(0,55), rand(0,40), $authText, $font);
+			/*imageString($im, 5, rand(0,55), rand(0,40), $authText, $font);//把字放上圖片*/
 			$str_x = 0;
 			$str_y = 0;
 			for($i = 0; $i < strlen($authText); $i++){
@@ -36,12 +36,12 @@
 				imageString($im, 5, $str_x, $str_y, $authText[$i], $font);
 			}
 
-			// 插入圖形干擾點共 50~200 點
+			/*插入圖形干擾點共 50~200 點*/
 			for($i = 0; $i < rand(50,200); $i++) {
 				$point = ImageColorAllocate($im, rand(0,255), rand(0,255), rand(0,255));
 				imagesetpixel($im, rand(0,$img_x)  , rand(0,$img_y) , $point);
 			}
-			//插入圖形干擾線共2~5條
+			/*插入圖形干擾線共2~5條*/
 			for($i = 1; $i<=rand(2,5); $i++){
 				$point = ImageColorAllocate($im, rand(0,255), rand(0,255), rand(0,255));
 				imageline($im, rand(0,$img_x), rand(0,$img_y), rand(0,$img_x), rand(0,$img_y) ,$point);
@@ -51,12 +51,12 @@
 			ImageDestroy($im);
 		}
 		public function CheckImg($source,$input_code){
-			$check_code=$this->num2adb($source);
-			if($check_code==$input_code){
+			return ($this->num2adb($source)==$input_code);
+			/*if($this->num2adb($source)==$input_code){
 				return true;
 			}else{
 				return false;
-			}
+			}*/
 		}
 		private function SetArr(){
 			$tmp = array();

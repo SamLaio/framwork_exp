@@ -4,7 +4,7 @@ class LibDataBase {
 	public $count = 0;
 	public $install = false;
 
-	//共用function
+	/*共用function*/
 	function __construct() {
 		$this->dbtype = DbType;
 		if ($this->dbtype == 'mysql') {
@@ -13,6 +13,9 @@ class LibDataBase {
 				$this->dbuser = DbUser;
 				$this->dbpass = DbPw;
 				$this->dbname = DbName;
+			}else{
+				echo 'DB link is false.';
+				exit;
 			}
 		}
 		if ($this->dbtype == 'sqlite') {
@@ -47,23 +50,23 @@ class LibDataBase {
 		}
 	}
 
-	//測試連線
+	/*測試連線*/
 	private function CheckDataBaseLink($host, $port) {
 		$ch_ini_display = (ini_get('display_errors') == 1);
-		if ($ch_ini_display) //判斷ini的display errors的設定
-			ini_set('display_errors', 0); //設定連線錯誤時不要display errors
+		if ($ch_ini_display) /*判斷ini的display errors的設定*/
+			ini_set('display_errors', 0); /*設定連線錯誤時不要display errors*/
 		$x = fsockopen(gethostbyname($host), $port, $errno, $errstr, 1);
 		if ($ch_ini_display)
-			ini_set('display_errors', 1); //將ini的display error設定改回來
-		if (!$x)//測試連線
+			ini_set('display_errors', 1); /*將ini的display error設定改回來*/
+		if (!$x)/*測試連線*/
 			return false;
 		else {
 			fclose($x);
 			return true;
 		}
 	}
-	//共用function end
-	//語法組合
+	/*共用function end*/
+	/*語法組合*/
 
 	public function Select($table, $field, $req = false, $other = false) {
 		$table = $this->comb(',',$table);
@@ -88,7 +91,7 @@ class LibDataBase {
 	}
 
 	public function Del($table, $req = '') {
-		//DELETE FROM [TABLE NAME] WHERE 條件;
+		/*DELETE FROM [TABLE NAME] WHERE 條件;*/
 		$table = $this->comb(',',$table);
 		if ($req != '')
 			$req = 'where ' . $req;
@@ -97,7 +100,7 @@ class LibDataBase {
 	}
 
 	public function Up($table, $arr, $req = '') {
-		//UPDATE [TABLE NAME] SET [欄名1]=值1, [欄名2]=值2, …… WHERE 條件;
+		/*UPDATE [TABLE NAME] SET [欄名1]=值1, [欄名2]=值2, …… WHERE 條件;*/
 		foreach($arr as $key => $value){
 			$toV[] = "`$key`='$value'";
 		}
@@ -106,8 +109,8 @@ class LibDataBase {
 		$sql = "update $table set $value$req;";
 		return $sql;
 	}
-	//語法組合 end
-	//sql執行
+	/*語法組合 end*/
+	/*sql執行*/
 	public function Query($sql = flase) {
 		if($sql){
 			$link = $this->Link();
@@ -138,7 +141,7 @@ class LibDataBase {
 		$link = null;
 		return $this->ValDecode($re);
 	}
-	//sql執行
+	/*sql執行*/
 
 	/*共用函式*/
 	public function ValAddTip($arr,$tip="'"){
