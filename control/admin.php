@@ -28,6 +28,7 @@ class admin {
 
 	public function LogOut(){
 		unset($_SESSION['Admin']);
+		header('Location:'.$_SESSION['SiteUrl']);
 	}
 	private function UrlReLoad(){
 		if(!isset($_SESSION['Admin'])){

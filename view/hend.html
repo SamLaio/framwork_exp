@@ -1,3 +1,8 @@
+<?php
+$HandSub = "[<a href = '".$_SESSION['SiteUrl']."admin/'>Mag Admin</a>]";
+if(isset($_SESSION['Admin']))
+	$HandSub .= "[<a href = '".$_SESSION['SiteUrl']."cgi/admin/LogOut'>LogOut</a>]";
+?>
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -8,5 +13,8 @@
 </head>
 <body>
 	<div id = 'top'>
-		<a href = '<?php echo $_SESSION['SiteUrl']?>'>Index</a>
+		[<a href = '<?php echo $_SESSION['SiteUrl']?>'>Index</a>]
+<?php
+	echo $HandSub;
+?>
 	</div>

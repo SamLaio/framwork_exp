@@ -12,7 +12,7 @@ class captcha {
 	public function ImgCheck($key){
 		$key = $key['post']['captcha'];
 		if(isset($_SESSION['CaptchaPw'])){
-			if($this->LibCaptcha->CheckImg($_SESSION['CaptchaPw'],$key))
+			if($this->LibCaptcha->CheckImg($_SESSION['CaptchaPw'],strtoupper($key)))
 				echo 1;
 			else
 				echo 0;

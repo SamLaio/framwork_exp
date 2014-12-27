@@ -75,10 +75,11 @@ class LibDataBase {
 		$or_by = '';
 		$limit = '';
 		if($other){
-			$or_by = (isset($other['order_by']))?" order by " . $this->comb(',',$other['order_by']):'';
-			$limit = (isset($other['limit']))?" limit " . $other['limit']:'';
+			$or_by = (isset($other['order_by']) and $other['order_by'] != '')?" order by " . $this->comb(',',$other['order_by']):'';
+			$limit = (isset($other['limit']) and $other['limit'] != '')?" limit " . $other['limit']:'';
 		}
 		$sql = "select $field from $table $req $or_by $limit;";
+		echo $sql;
 		return $sql;
 	}
 
