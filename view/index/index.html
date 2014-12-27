@@ -1,14 +1,35 @@
 <?php
-	print_r( $InData);
+	$toP = array();
+	$i = 0;
+	foreach($InData['data'] as $flowData){
+		$toP[$i] = "<div class = 'FlowItem'>";
+		foreach($flowData as $key => $val){
+			if($key == 0){
+				$toP[$i] .= $val['name'].' -- '.$val['date'].'<br />'.$val['content'];
+			}else{
+				$toP[$i] .="<div class='FlowItemRb'>";
+				$toP[$i] .= $val['name'].' -- '.$val['date'].'<br />'.$val['content'];
+				$toP[$i] .="</div>";
+			}
+		}
+		$toP[$i] .= "</div>";
+		$i++;
+	}
 ?>
 
-
+<div id = 'FlowMain'><?php echo implode($toP); ?></div>
+<style>
+.FlowItemRb {
+    margin-bottom: 1em;
+    margin-left: 2em;
+}
+</style>
 <div id = 'page_bar'>
 <?php
   $list = $InData['page']['count'];//資料總數
   $list_nub = $InData['page']['row'];//每頁顯示的資料筆數
   $pages = ceil($list/$list_nub); //總頁數
-  $page = $InData['page']['page'];//目前所在的頁數，我的是陣列筆數，所以要加一
+  $page = $InData['page']['page'];//目前所在的頁數
 
   //顯示在下方的主要陣列，0為pagebar前的 "<< <"，1為pagebar主體，2為"> >>"
   $PageBar=array(0=>'',1=>'',2=>'');

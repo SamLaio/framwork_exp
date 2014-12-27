@@ -17,7 +17,7 @@ class ModelIndex extends LibDataBase {
 		}
 		$toDb['limit']='';
 		if(isset($arr['page'])){
-			$arr['page'] = ($arr['page']==0)?0: ($arr['page']*$this->row+1);
+			$toDb['limit'] = ($arr['page']==0)?0: ($arr['page']*$this->row+1);
 			$toDb['limit'] = $arr['page'].','.$this->row;
 		}
 		$toDb['R'] = implode(' and ', $toDb['R']);
