@@ -79,7 +79,7 @@ class LibDataBase {
 			$limit = (isset($other['limit']) and $other['limit'] != '')?" limit " . $other['limit']:'';
 		}
 		$sql = "select $field from $table $req $or_by $limit;";
-		echo $sql;
+		/*echo $sql;*/
 		return $sql;
 	}
 

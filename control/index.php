@@ -14,6 +14,8 @@ class index {
 		if(isset($arr['get']['page']))
 			$re['page'] = $arr['get']['page']-1;
 		$re = $this->db->GetFlow($re);
+		if($re['data']==false)
+			return false;
 		$re['data'] = $this->ReWriteFlow($re['data']);
 		return $re;
 	}

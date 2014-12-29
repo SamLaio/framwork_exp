@@ -1,7 +1,21 @@
 #top, #foot {
-	background-color:#000;
-	color:#fff;
+	background-color: #000;
+	color: #fff;
 }
 #top a, #foot a {
-	color:#9489F5;
+	color: #9489F5;
 }
+body {
+	width: 80%;
+	margin-left: 10%;
+	margin-top: 0;
+}
+#FlowMain {
+	margin-left:2em;
+}
+.rebk {
+	text-align: right;
+}
+/* .FlowTitle, .FlowContent, .FlowItemRb, .rebk{
+	width:50%;
+} */
