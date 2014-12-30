@@ -21,6 +21,11 @@ body {
 	text-decoration:none;
 	color: #0000ff;
 }
+.FlowItemRb {
+    margin-bottom: 1em;
+    margin-left: 2em;
+    background-color: #efefef;
+}
 /* .FlowTitle, .FlowContent, .FlowItemRb, .rebk{
 	width:50%;
 } */

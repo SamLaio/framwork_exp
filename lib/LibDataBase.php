@@ -3,6 +3,7 @@ class LibDataBase {
 	public $dbtype, $dbhost,$dbuser,$dbpass,$dbname,$table;
 	public $count = 0;
 	public $install = false;
+	private $DBLink=false;
 
 	/*共用function*/
 	function __construct() {
@@ -43,7 +44,8 @@ class LibDataBase {
 		}
 		/*test link add by Sam 20140805*/
 		if($link)
-			return $link;
+			// return $link;
+			$this->DBLink = $link;
 		else{
 			echo 'DB link is false.';
 			exit;
@@ -114,19 +116,19 @@ class LibDataBase {
 	/*sql執行*/
 	public function Query($sql = flase) {
 		if($sql){
-			$link = $this->Link();
-			$link->query($sql);
-			$link = null;
+			$this->Link();
+			$this->DBLink->query($sql);
+			$this->DBLink = null;
 		}
 	}
 
 	public function Fetch($sql) {
-		$link = $this->Link();
+		$this->Link();
 		$this->count = 0;
-		$query = $link->query($sql);
+		$query = $this->DBLink->query($sql);
 		$this->count = count($query);
 		$query = $query->fetchAll();
-		$link = null;
+		$this->DBLink = null;
 		return $this->ValDecode(query);
 	}
 
@@ -134,12 +136,12 @@ class LibDataBase {
 		if($field){
 			$sql = $this->Select($sql,$field, $req, $other);
 		}
-		$link = $this->Link();
-		$re = $link->query($sql);
+		$this->Link();
+		$re = $this->DBLink->query($sql);
 		$re->setFetchMode(PDO::FETCH_ASSOC);
 		$re = $re->fetchAll();
 		$this->count = count($re);
-		$link = null;
+		$this->DBLink = null;
 		return $this->ValDecode($re);
 	}
 	/*sql執行*/

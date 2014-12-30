@@ -6,10 +6,19 @@
 			$toP[$i] = "<div class = 'FlowItem'>";
 			foreach($flowData as $key => $val){
 				if($key == 0){
-					$toP[$i] .= "<div class = 'FlowTitle'>".$val['name'].' -- '.$val['date']."</div><div class = 'FlowContent'>".$val['content']."</div><div class='rebk' sub = '".$val['seq']."'>[<span class = 'link'>rebk</span>]</div><div class = 'RebkFrom'></div>";
+					$toP[$i] .=
+					"<div class = 'FlowTitle'>".
+							$val['name'].' -- '.$val['date'].
+						"</div>
+						<div class = 'FlowContent'>".$val['content']."</div>
+						<div class='rebk' sub = '".$val['seq']."'>
+							[<span class = 'link'>rebk</span>]
+						</div><div class = 'RebkFrom'></div>";
 				}else{
 					$toP[$i] .="<div class='FlowItemRb'>";
-					$toP[$i] .= "<div class = 'FlowTitle'>".$val['name'].' -- '.$val['date']."</div><div class = 'FlowContent'>".$val['content'].'</div>';
+					$toP[$i] .=
+					"<div class = 'FlowTitle'>".$val['name'].' -- '.$val['date']."</div>
+					<div class = 'FlowContent'>".$val['content'].'</div>';
 					$toP[$i] .="</div>";
 				}
 			}
@@ -97,11 +106,3 @@ function SetFrom(width){
 	[<span class = 'AddFlow link'>Add</span>]
 </div>
 <div id = 'AddFlowFrom'></div>
-
-<style>
-.FlowItemRb {
-    margin-bottom: 1em;
-    margin-left: 2em;
-    background-color: #efefef;
-}
-</style>

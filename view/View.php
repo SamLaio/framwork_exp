@@ -37,6 +37,7 @@ class View {
 		foreach($re_arr as $key => $value){
 			$tmp[] = array('id'=>$key, 'val'=>$value);
 		}
+		unset($re_arr);
 		$_SESSION['PwEnCode']=$tmp;
 		$tmp = array();
 		$_SESSION['PwHand'] = rand(3,5);
