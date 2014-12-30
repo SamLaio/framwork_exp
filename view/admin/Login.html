@@ -29,13 +29,12 @@ $(window).ready(function(){
 		}else{
 			alert('Input Box have Error(s).');
 		}
-
 	});
 	$('#ReLoadCapthcha').on('click',function(){
 		document.getElementById('captchaImg').setAttribute('src','<?php echo $_SESSION['SiteUrl']; ?>cgi/captcha/ImgPut?'+Math.random());document.getElementById('captchaImg').value='';
 		$('#captcha').val('');
 	});
-})
+});
 </script>
 Account:<input type = 'text' id = 'acc' /><br />
 Password:<input type = 'password' id = 'pswd' /><br />

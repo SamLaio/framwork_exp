@@ -20,6 +20,15 @@ class index {
 		return $re;
 	}
 
+	public function ReBkFn($arr){
+		if(isset($arr['post'])){
+			if($this->db->SaveFlow($arr['post'])){
+				echo 1;
+			}else{
+				echo -1;
+			}
+		}
+	}
 	private function ReWriteFlow($arr){
 		$re = array();
 		foreach($arr as $key => $val){

@@ -180,6 +180,15 @@ class LibDataBase {
 		}
 		return $arr;
 	}
+	public function ValEncode($arr) {
+		if (is_array($arr)) {
+			foreach ($arr as $key => $value)
+				$arr[$key] = $this->CheckInput($value);
+		} else {
+			$arr = str_replace(array("&", "'", '"', "<", ">"), array('@&5', '@&1', '@&2', '@&3', '@&4'), $arr);
+		}
+		return $arr;
+	}
 
 	public function Json2Array($json) {
 		$ret = array();

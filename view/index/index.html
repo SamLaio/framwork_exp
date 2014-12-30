@@ -6,7 +6,7 @@
 			$toP[$i] = "<div class = 'FlowItem'>";
 			foreach($flowData as $key => $val){
 				if($key == 0){
-					$toP[$i] .= "<div class = 'FlowTitle'>".$val['name'].' -- '.$val['date']."</div><div class = 'FlowContent'>".$val['content']."</div><div class='rebk' onclick='rebk(".$val['seq'].")'>rebk</div>";
+					$toP[$i] .= "<div class = 'FlowTitle'>".$val['name'].' -- '.$val['date']."</div><div class = 'FlowContent'>".$val['content']."</div><div class='rebk' sub = '".$val['seq']."'>[<span class = 'link'>rebk</span>]</div><div class = 'RebkFrom'></div>";
 				}else{
 					$toP[$i] .="<div class='FlowItemRb'>";
 					$toP[$i] .= "<div class = 'FlowTitle'>".$val['name'].' -- '.$val['date']."</div><div class = 'FlowContent'>".$val['content'].'</div>';
@@ -21,25 +21,87 @@
 		$PageBar = GetPageBar($InData['page']);
 	}else{
 		$PageBar = '';
-		$toP='Undefin any Flow.';
+		$toP='Undefind any Flow.';
 	}
 ?>
 
 <script>
+var FlowId = 0;
+var ReBkFrome_t = "Name:<input id = 'ReBk_name' /><br />Content:<br /><textarea id = 'ReBk_content' width = '100%'/><br /><img id = 'captchaImg' src = '<?php echo $_SESSION['SiteUrl']?>cgi/captcha/ImgPut?'"+Math.random()+" /><input id = 'captcha' maxlength = '6' size = '6' />[<span id = 'ReLoadCapthcha' class = 'link'>ReLoadCapthcha</span>]<br />[<span id = 'SubMit' class = 'link'>Submit</span>][<span id = 'CloseFrom' class = 'link'>Close</span>]";
 $(window).ready(function(){
-
-
+	$('.rebk').on('click',function(){
+		CloseRebkFrom();
+		FlowId = $(this).attr('sub');
+		$(this).next().html(ReBkFrome_t);
+		SetFrom($(this).width());
+	});
+	$('.AddFlow').on('click',function(){
+		CloseRebkFrom();
+		$('#AddFlowFrom').html(ReBkFrome_t);
+		SetFrom($('#AddFlowFrom').width());
+	});
 });
-function rebk(id){
-	alert(id);
+function CloseRebkFrom(){
+	FlowId = 0;
+	$('.RebkFrom').html('');
+	$('#AddFlowFrom').html('');
+}
+function SetFrom(width){
+	document.getElementById('captchaImg').setAttribute('src','<?php echo $_SESSION['SiteUrl']; ?>cgi/captcha/ImgPut?'+Math.random());
+	//$('.link').css({'cursor':'pointer','text-decoration':'none','color':'#0000ff'});
+	//document.getElementById('captchaImg').value='';
+	$('#ReBk_content').css('width', width);
+	$('#SubMit').on('click',function(){
+		if($('#captcha').val() != ''){
+			$.post('<?php echo $_SESSION['SiteUrl'];?>cgi/captcha/ImgCheck',
+				{'captcha':$('#captcha').val()},
+				function ( r ){
+					if(r == 1){
+						if($('#ReBk_name').val() != '' && $('#ReBk_content').val() != ''){
+							$.post('<?php echo $_SESSION['SiteUrl'];?>cgi/index/ReBkFn',
+								{
+									'name':$('#ReBk_name').val(),
+									'content':$('#ReBk_content').val(),
+									'id':FlowId
+								},
+								function(e){
+									if(e == 1){
+										location.reload();
+									}
+							});
+						}else{
+							alert('Any Fold(s) is Null.');
+						}
+					}else{
+						alert('Captch is Error.');
+					}
+			});
+		}
+	});
+	$('#CloseFrom').on('click',function(){
+		CloseRebkFrom();
+	});
+	$('#ReLoadCapthcha').on('click',function(){
+		document.getElementById('captchaImg').setAttribute('src','<?php echo $_SESSION['SiteUrl']; ?>cgi/captcha/ImgPut?'+Math.random());document.getElementById('captchaImg').value='';
+		$('#captcha').val('');
+	});
 }
 </script>
+<div>
+	[<span class = 'AddFlow link'>Add</span>]
+</div>
 <?php echo $PageBar;?>
 <div id = 'FlowMain'><?php echo $toP ?></div>
 <?php echo $PageBar;?>
+<div>
+	[<span class = 'AddFlow link'>Add</span>]
+</div>
+<div id = 'AddFlowFrom'></div>
+
 <style>
 .FlowItemRb {
     margin-bottom: 1em;
     margin-left: 2em;
+    background-color: #efefef;
 }
 </style>

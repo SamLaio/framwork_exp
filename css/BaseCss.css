@@ -16,6 +16,11 @@ body {
 .rebk {
 	text-align: right;
 }
+.link{
+	cursor:pointer;
+	text-decoration:none;
+	color: #0000ff;
+}
 /* .FlowTitle, .FlowContent, .FlowItemRb, .rebk{
 	width:50%;
 } */
