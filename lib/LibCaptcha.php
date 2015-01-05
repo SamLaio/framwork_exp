@@ -19,7 +19,7 @@
 
 			/*產生圖檔, 及定義顏色*/
 			$img_x = 120;
-			$img_y = 28;
+			$img_y = 30;
 			$im = imageCreate($img_x, $img_y);
 			/*ImageColorAllocate 分配圖形的顏色*/
 			$back = ImageColorAllocate($im, rand(200,255), rand(200,255), rand(200,255));

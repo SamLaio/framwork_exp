@@ -1,68 +1,67 @@
 <?php
 class LibBoot {
+	private $control;
+	private $view = false;
 	function __construct($url) {
 		/*檢查是否不用載入view*/
 		$cgi = (isset($url[0]))?in_array($url[0],array('cgi','js')):false;
-		$view = false;
-		if(!$cgi){
-			/*設定url[0]和url[1]*/
-			$url[0] = (!isset($url[0]) or $url[0] == '')?'index':$url[0];
-			$url[1] = (!isset($url[1]) or $url[1] == '')?'index':$url[1];
-		}else{
+		if($cgi){
 			/*是cgi就把url[0]之後的向前搬*/
 			if($url[0] == 'cgi'){
 				$url[0] = $url[1];
 				if(isset($url[2]))
 					$url[1] = $url[2];
-				$url[0] = (!isset($url[0]) or $url[0] == '')?'index':$url[0];
-				$url[1] = (!isset($url[1]) or $url[1] == '')?'index':$url[1];
 			}
 			/*是js，就建立url[1](如果url[1]存在就搬進去，沒有就用Jquery)*/
 			if($url[0] == 'js'){
 				$url[1] = (!isset($url[1]) or $url[1] == '')?'Jquery':$url[1];
 			}
 		}
+
+		$url[0] = (!isset($url[0]) or $url[0] == '')?'index':$url[0];
+		$url[1] = (!isset($url[1]) or $url[1] == '')?'index':$url[1];
 		/*檢查control的class是不是存在*/
-		$control = $this->FileCk(SCANDIR('control'), $url[0]);
+		$this->control = $this->FileCk(SCANDIR('control'), $url[0]);
 		if(!$cgi){
 			/*檢查view的資料夾是不是存在*/
-			$view = $this->FileCk(SCANDIR('view'), $url[0],false);
+			$this->view = $this->FileCk(SCANDIR('view'), $url[0],false);
 			/*檢查view的檔案是不是存在*/
-			$view = $this->FileCk(SCANDIR("view/$view"), $url[1]);
-			if($control == 'error' or $view == 'error'){
-				$view = '404';
-				$control = 'error';
+			$this->view = $this->FileCk(SCANDIR("view/$this->view"), $url[1]);
+			if($this->control == 'error' or $this->view == 'error'){
+				$this->view = '404';
+				$this->control = 'error';
 			}
 		}
 		/*control start*/
-		include "control/$control.php";
-		$ControlObj = new $control;
+		include "control/$this->control.php";
+		$Control = new $this->control;
 		/*接control吐出來的資料*/
 		$ControlRet = array();
-		/*傳入的資料替代*/
-		if(isset($_GET) and count($_GET) != 0)
-			$data['get'] = $this->InDataCk($_GET);
-		if(isset($_POST) and count($_POST) != 0)
-			$data['post'] = $this->InDataCk($_POST);
 		/*include js*/
 		if($url[0] == 'js'){
 			$data = $url[1];
 			$url[1] = 'getJs';
+		}else{
+			/*傳入的資料替代*/
+			if(isset($_GET) and count($_GET) != 0)
+				$data['get'] = $this->InDataCk($_GET);
+			if(isset($_POST) and count($_POST) != 0)
+				$data['post'] = $this->InDataCk($_POST);
 		}
 		/*檢查function是否在coltrol中*/
-		if (method_exists($ControlObj, $url[1])) {
+		if (method_exists($Control, $url[1])) {
 			if(isset($data)){
-				$ControlRet = $ControlObj->{$url[1]}($data);
+				$ControlRet = $Control->{$url[1]}($data);
 			}else{
-				$ControlRet = $ControlObj->{$url[1]}();
+				$ControlRet = $Control->{$url[1]}();
 			}
 		}
 		/*control end*/
 
 		/*view start*/
-		if($view){
+		if($this->view){
 			include "view/View.php";
-			$ViewObj = new View($control .'/'.$view,$ControlRet);
+			$View = new View($this->control .'/'.$this->view,$ControlRet);
 		}
 		/*view end*/
 	}

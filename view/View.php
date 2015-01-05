@@ -1,6 +1,6 @@
 <?php
 class View {
-	function __construct($page, $InData) {
+	function __construct($page, $InData = false) {
 		include_once 'hend.html';
 		include_once "$page.html";
 		$this->getBody('view/'.$page.'.html');
