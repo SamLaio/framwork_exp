@@ -57,8 +57,6 @@ function CloseRebkFrom(){
 }
 function SetFrom(width){
 	document.getElementById('captchaImg').setAttribute('src','<?php echo $_SESSION['SiteUrl']; ?>cgi/captcha/ImgPut?'+Math.random());
-	//$('.link').css({'cursor':'pointer','text-decoration':'none','color':'#0000ff'});
-	//document.getElementById('captchaImg').value='';
 	$('#ReBk_content').css('width', width);
 	$('#SubMit').on('click',function(){
 		if($('#captcha').val() != ''){
