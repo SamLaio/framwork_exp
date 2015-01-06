@@ -7,15 +7,27 @@ class captcha {
 	}
 	public function ImgPut(){
 		$_SESSION['CaptchaPw'] = rand(50,500000);
-		$this->LibCaptcha->CreateImg($_SESSION['CaptchaPw']);
+		$this->LibCaptcha->CreateImg($this->LibCaptcha->num2adb($_SESSION['CaptchaPw']));
 	}
 	public function ImgCheck($key){
+		if(isset($_SESSION['CatptchaError'])){
+			if($_SESSION['CatptchaError'] >= 3){
+				echo 0;
+				exit;
+			}
+		}
 		$key = $key['post']['captcha'];
 		if(isset($_SESSION['CaptchaPw'])){
-			if($this->LibCaptcha->CheckImg($_SESSION['CaptchaPw'],strtoupper($key)))
+			if($this->LibCaptcha->CheckImg($_SESSION['CaptchaPw'],strtoupper($key))){
 				echo 1;
-			else
+			}else{
 				echo 0;
+				if(isset($_SESSION['CatptchaError'])){
+					$_SESSION['CatptchaError']++;
+				}else{
+					$_SESSION['CatptchaError'] = 1;
+				}
+			}
 		}else
 			echo 0;
 	}

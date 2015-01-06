@@ -13,10 +13,7 @@
 			}
 			return $text;
 		}
-		public function CreateImg($num){
-			/*產生種子, 作圖形干擾用*/
-			srand((double)microtime()*10000000000);
-
+		public function CreateImg($authText){
 			/*產生圖檔, 及定義顏色*/
 			$img_x = 120;
 			$img_y = 30;
@@ -24,7 +21,7 @@
 			/*ImageColorAllocate 分配圖形的顏色*/
 			$back = ImageColorAllocate($im, rand(200,255), rand(200,255), rand(200,255));
 
-			$authText=$this->num2adb($num);
+			// $authText=$this->num2adb($num);
 			imageFill($im, 0, 0, $back);
 			/*imageString($im, 5, rand(0,55), rand(0,40), $authText, $font);//把字放上圖片*/
 			$str_x = 0;
@@ -52,11 +49,6 @@
 		}
 		public function CheckImg($source,$input_code){
 			return ($this->num2adb($source)==$input_code);
-			/*if($this->num2adb($source)==$input_code){
-				return true;
-			}else{
-				return false;
-			}*/
 		}
 		private function SetArr(){
 			$tmp = array();

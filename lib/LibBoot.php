@@ -35,8 +35,6 @@ class LibBoot {
 		/*control start*/
 		include "control/$this->control.php";
 		$Control = new $this->control;
-		/*接control吐出來的資料*/
-		$ControlRet = array();
 		/*include js*/
 		if($url[0] == 'js'){
 			$data = $url[1];
@@ -48,6 +46,8 @@ class LibBoot {
 			if(isset($_POST) and count($_POST) != 0)
 				$data['post'] = $this->InDataCk($_POST);
 		}
+		/*接control吐出來的資料*/
+		$ControlRet = array();
 		/*檢查function是否在coltrol中*/
 		if (method_exists($Control, $url[1])) {
 			if(isset($data)){
