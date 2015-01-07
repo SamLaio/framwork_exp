@@ -6,7 +6,6 @@ if(!isset($_SESSION['SiteUrl'])){
 	$port = ($_SERVER['SERVER_PORT'] == 80)?'http://':'https://';
 	$_SESSION['SiteUrl'] = $port . $_SERVER['HTTP_HOST'] . $UrlBase[0];
 }
-$url = explode('/',$UrlBase[1]);
 $url = array();
 foreach(explode('/',$UrlBase[1]) as $val){
 	if($val != '')

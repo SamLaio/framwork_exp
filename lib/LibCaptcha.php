@@ -48,6 +48,7 @@
 			ImageDestroy($im);
 		}
 		public function CheckImg($source,$input_code){
+			// echo $this->num2adb($source).'=='.$input_code;
 			return ($this->num2adb($source)==$input_code);
 		}
 		private function SetArr(){

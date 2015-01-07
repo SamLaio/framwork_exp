@@ -33,10 +33,10 @@
 		$toP='Undefind any Flow.';
 	}
 ?>
-
+<script src='<?php echo $_SESSION['SiteUrl'];?>js/Captcha'></script>
 <script>
 var FlowId = 0;
-var ReBkFrome_t = "Name:<input id = 'ReBk_name' /><br />Content:<br /><textarea id = 'ReBk_content' width = '100%'/><br /><img id = 'captchaImg' src = '<?php echo $_SESSION['SiteUrl']?>cgi/captcha/ImgPut?'"+Math.random()+" /><input id = 'captcha' maxlength = '6' size = '6' />[<span id = 'ReLoadCapthcha' class = 'link'>ReLoadCapthcha</span>]<br />[<span id = 'SubMit' class = 'link'>Submit</span>][<span id = 'CloseFrom' class = 'link'>Close</span>]";
+var ReBkFrome_t = "Name:<input id = 'ReBk_name' /><br />Content:<br /><textarea id = 'ReBk_content' width = '100%'/><br /><captcha></captcha><br />[<span id = 'SubMit' class = 'link'>Submit</span>][<span id = 'CloseFrom' class = 'link'>Close</span>]";
 $(window).ready(function(){
 	$('.rebk').on('click',function(){
 		CloseRebkFrom();
@@ -56,41 +56,31 @@ function CloseRebkFrom(){
 	$('#AddFlowFrom').html('');
 }
 function SetFrom(width){
-	document.getElementById('captchaImg').setAttribute('src','<?php echo $_SESSION['SiteUrl']; ?>cgi/captcha/ImgPut?'+Math.random());
+	$('captcha').Captcha();
 	$('#ReBk_content').css('width', width);
 	$('#SubMit').on('click',function(){
-		if($('#captcha').val() != ''){
-			$.post('<?php echo $_SESSION['SiteUrl'];?>cgi/captcha/ImgCheck',
-				{'captcha':$('#captcha').val()},
-				function ( r ){
-					if(r == 1){
-						if($('#ReBk_name').val() != '' && $('#ReBk_content').val() != ''){
-							$.post('<?php echo $_SESSION['SiteUrl'];?>cgi/index/ReBkFn',
-								{
-									'name':$('#ReBk_name').val(),
-									'content':$('#ReBk_content').val(),
-									'id':FlowId
-								},
-								function(e){
-									if(e == 1){
-										location.reload();
-									}
-							});
-						}else{
-							alert('Any Fold(s) is Null.');
+		if($('captcha').CaptchaCheck()){
+			if($('#ReBk_name').val() != '' && $('#ReBk_content').val() != ''){
+				$.post('<?php echo $_SESSION['SiteUrl'];?>cgi/index/ReBkFn',
+					{
+						'name':$('#ReBk_name').val(),
+						'content':$('#ReBk_content').val(),
+						'id':FlowId
+					},
+					function(e){
+						if(e == 1){
+							location.reload();
 						}
-					}else{
-						alert('Captch is Error.');
-					}
-			});
+				});
+			}else{
+				alert('Any Fold(s) is Null.');
+			}
+		}else{
+			alert('Captch is Error.');
 		}
 	});
 	$('#CloseFrom').on('click',function(){
 		CloseRebkFrom();
-	});
-	$('#ReLoadCapthcha').on('click',function(){
-		document.getElementById('captchaImg').setAttribute('src','<?php echo $_SESSION['SiteUrl']; ?>cgi/captcha/ImgPut?'+Math.random());document.getElementById('captchaImg').value='';
-		$('#captcha').val('');
 	});
 }
 </script>

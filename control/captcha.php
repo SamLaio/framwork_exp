@@ -6,6 +6,7 @@ class captcha {
 		$this->LibCaptcha = new LibCaptcha;
 	}
 	public function ImgPut(){
+		unset($_SESSION['CatptchaError']);
 		$_SESSION['CaptchaPw'] = rand(50,500000);
 		$this->LibCaptcha->CreateImg($this->LibCaptcha->num2adb($_SESSION['CaptchaPw']));
 	}
@@ -18,6 +19,7 @@ class captcha {
 		}
 		$key = $key['post']['captcha'];
 		if(isset($_SESSION['CaptchaPw'])){
+			// echo $_SESSION['CaptchaPw'].'---'.strtoupper($key);
 			if($this->LibCaptcha->CheckImg($_SESSION['CaptchaPw'],strtoupper($key))){
 				echo 1;
 			}else{

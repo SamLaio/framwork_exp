@@ -4,7 +4,8 @@ class js {
 		$arr = array(
 			'Jquery' => 'lib/js/jquery.min.js',
 			'JqueryUI' => 'lib/js/jquery-ui.js',
-			'JqueryDataTables' => 'lib/js/jquery.dataTables.js'/*,
+			'JqueryDataTables' => 'lib/js/jquery.dataTables.js',
+			'Captcha' => 'lib/js/Captcha.js'/*,
 			'Lang' => 'lib/js/Lang.js'*/
 		);
 		if($obj and in_array($obj, array_keys($arr))){
