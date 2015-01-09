@@ -30,13 +30,13 @@
 		$PageBar = GetPageBar($InData['page']);
 	}else{
 		$PageBar = '';
-		$toP='Undefind any Flow.';
+		$toP="<span id = 'Lang_unfind'></span>";
 	}
 ?>
 <script src='<?php echo $_SESSION['SiteUrl'];?>js/Captcha'></script>
 <script>
 var FlowId = 0;
-var ReBkFrome_t = "Name:<input id = 'ReBk_name' /><br />Content:<br /><textarea id = 'ReBk_content' width = '100%'/><br /><captcha></captcha><br />[<span id = 'SubMit' class = 'link'>Submit</span>][<span id = 'CloseFrom' class = 'link'>Close</span>]";
+var ReBkFrome_t = "<span class='Lang_name'></span><input id = 'ReBk_name' /><br /><span class='Lang_content'></span><br /><textarea id = 'ReBk_content' width = '100%'/><br /><captcha></captcha><br />[<span id = 'SubMit' class = 'link Lang_submit'></span>][<span id = 'CloseFrom' class = 'link Lang_close'></span>]";
 $(window).ready(function(){
 	$('.rebk').on('click',function(){
 		CloseRebkFrom();
@@ -82,15 +82,17 @@ function SetFrom(width){
 	$('#CloseFrom').on('click',function(){
 		CloseRebkFrom();
 	});
+
+	LangLoad();
 }
 </script>
 <div>
-	[<span class = 'AddFlow link'>Add</span>]
+	[<span class = 'AddFlow link'><span class = 'Lang_add'></span></span>]
 </div>
 <?php echo $PageBar;?>
 <div id = 'FlowMain'><?php echo $toP ?></div>
 <?php echo $PageBar;?>
 <div>
-	[<span class = 'AddFlow link'>Add</span>]
+	[<span class = 'AddFlow link'><span class = 'Lang_add'></span></span>]
 </div>
 <div id = 'AddFlowFrom'></div>

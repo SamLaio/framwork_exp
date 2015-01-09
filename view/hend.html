@@ -1,7 +1,7 @@
 <?php
-$HandSub = "[<a href = '".$_SESSION['SiteUrl']."admin/'>Mag Admin</a>]";
+$HandSub = "[<a href = '".$_SESSION['SiteUrl']."admin/'><span id = 'Lang_admin'></span></a>]";
 if(isset($_SESSION['Admin']))
-	$HandSub .= "[<a href = '".$_SESSION['SiteUrl']."cgi/admin/LogOut'>LogOut</a>]";
+	$HandSub .= "[<a href = '".$_SESSION['SiteUrl']."cgi/admin/LogOut'><span id = 'Lang_logout'></span></a>]";
 ?>
 <!DOCTYPE html>
 <html lang="zh-TW">
@@ -9,12 +9,17 @@ if(isset($_SESSION['Admin']))
 	<meta charset="UTF-8">
 	<title>FramWork Exp</title>
 	<script src='<?php echo $_SESSION['SiteUrl'];?>js/'></script>
+	<script src='<?php echo $_SESSION['SiteUrl'];?>js/Lang'></script>
 	<link rel='stylesheet' href='<?php echo $_SESSION['SiteUrl']?>css/BaseCss.css'>
-
 </head>
 <body>
+	<script type="text/javascript">
+	$(window).ready(function(){
+		LangLoad();
+	});
+	</script>
 	<div id = 'top'>
-		[<a href = '<?php echo $_SESSION['SiteUrl']?>'>Index</a>]
+		[<a href = '<?php echo $_SESSION['SiteUrl']?>'><span id = 'Lang_index'></span></a>]
 <?php
 	echo $HandSub;
 ?>
