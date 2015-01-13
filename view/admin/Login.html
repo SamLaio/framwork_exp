@@ -14,20 +14,20 @@ $(window).ready(function(){
 									if(e==1){
 										document.location.href='<?php echo $_SESSION['SiteUrl'];?>admin/';
 									}else{
-										alert('error');
+										alert(LangVal.LoginError);
 									}
 								}
 							);
 						}else{
-							alert('Captcha is Error.');
+							alert(LangVal.CaptchaError);
 						}
 					}
 				);
 			}else{
-				alert('Captcha is Null.');
+				alert(LangVal.CaptchaNull);
 			}
 		}else{
-			alert('Input Box have Error(s).');
+			alert(LangVal.FoldNull);
 		}
 	});
 	$('#ReLoadCapthcha').on('click',function(){
