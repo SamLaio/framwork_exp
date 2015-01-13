@@ -12,17 +12,23 @@ foreach(explode('/',$UrlBase[1]) as $val){
 		$url[] = $val;
 }
 /*set data base info*/
-$DbType = 'mysql';
-$DbHost = '127.0.0.1';
-$DbUser = 'root';
-$DbPw = '';
-$DbName = 'framwork_exp';
-
-define('DbType', $DbType);
-define('DbHost', $DbHost);
-define('DbUser', $DbUser);
-define('DbPw', $DbPw);
-define('DbName', $DbName);
+if(!isset(DbType) or !isset(DbHost) or !isset(DbUser) or !isset(DbPw) or !isset(DbName)){
+	$DbType = 'mysql';
+	$DbHost = '127.0.0.1';
+	$DbUser = 'root';
+	$DbPw = '';
+	$DbName = 'framwork_exp';
+	if(!isset(DbType))
+		define('DbType', $DbType);
+	if(!isset(DbHost))
+		define('DbHost', $DbHost);
+	if(!isset(DbUser))
+		define('DbUser', $DbUser);
+	if(!isset(DbPw))
+		define('DbPw', $DbPw);
+	if(!isset(DbName))
+		define('DbName', $DbName);
+}
 /*set data base info*/
 
 include 'lib/LibDataBase.php';
