@@ -12,21 +12,21 @@ foreach(explode('/',$UrlBase[1]) as $val){
 		$url[] = $val;
 }
 /*set data base info*/
-if(!isset(DbType) or !isset(DbHost) or !isset(DbUser) or !isset(DbPw) or !isset(DbName)){
+if(!defined ('DbType') or !defined ('DbHost') or !defined ('DbUser') or !defined ('DbPw') or !defined ('DbName')){
 	$DbType = 'mysql';
 	$DbHost = '127.0.0.1';
 	$DbUser = 'root';
 	$DbPw = '';
 	$DbName = 'framwork_exp';
-	if(!isset(DbType))
+	if(!defined ('DbType'))
 		define('DbType', $DbType);
-	if(!isset(DbHost))
+	if(!defined ('DbHost'))
 		define('DbHost', $DbHost);
-	if(!isset(DbUser))
+	if(!defined ('DbUser'))
 		define('DbUser', $DbUser);
-	if(!isset(DbPw))
+	if(!defined ('DbPw'))
 		define('DbPw', $DbPw);
-	if(!isset(DbName))
+	if(!defined ('DbName'))
 		define('DbName', $DbName);
 }
 /*set data base info*/
