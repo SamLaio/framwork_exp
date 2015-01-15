@@ -19,9 +19,15 @@ if(isset($_SESSION['Admin']))
 		LangLoad();
 	});
 	</script>
+<?php
+	if($body){
+?>
 	<div id = 'top'>
 		[<a href = '<?php echo $_SESSION['SiteUrl']?>'><span id = 'Lang_index'></span></a>]
 <?php
 	echo $HandSub;
 ?>
 	</div>
+<?php
+	}
+?>

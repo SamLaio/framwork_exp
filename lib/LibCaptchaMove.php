@@ -26,7 +26,8 @@ class LibCaptchaMove {
 			array('7x7','49'),
 			array('8x8','64'),
 			array('9x9','81'),
-			array('10x10','100'),
+			array('10x10','100')/*,
+			array('一 加 一','100')*/
 		);
 	}
 

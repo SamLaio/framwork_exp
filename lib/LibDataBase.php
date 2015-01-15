@@ -68,8 +68,8 @@ class LibDataBase {
 		}
 	}
 	/*共用function end*/
-	/*語法組合*/
 
+	/*語法組合*/
 	public function Select($table, $field, $req = false, $other = false) {
 		$table = $this->comb(',',$table);
 		$field = $this->comb(',', $field);

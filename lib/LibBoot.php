@@ -4,7 +4,8 @@ class LibBoot {
 	private $view = false;
 	function __construct($url) {
 		/*檢查是否不用載入view*/
-		$cgi = (isset($url[0]))?in_array($url[0],array('cgi','js')):false;
+		$cgi = (isset($url[0]))?in_array($url[0],array('cgi','js','body')):false;
+		$body = false;
 		if($cgi){
 			/*是cgi就把url[0]之後的向前搬*/
 			if($url[0] == 'cgi'){
@@ -15,6 +16,16 @@ class LibBoot {
 			/*是js，就建立url[1](如果url[1]存在就搬進去，沒有就用Jquery)*/
 			if($url[0] == 'js'){
 				$url[1] = (!isset($url[1]) or $url[1] == '')?'Jquery':$url[1];
+			}
+			/*只讀取body*/
+			if($url[0] == 'body'){
+				$body = true;
+				unset($url[0]);
+				$cgi = false;
+				if(isset($url[1]))
+					$url[0] = $url[1];
+				if(isset($url[2]))
+					$url[1] = $url[2];
 			}
 		}
 
@@ -46,6 +57,7 @@ class LibBoot {
 			if(isset($_POST) and count($_POST) != 0)
 				$data['post'] = $this->InDataCk($_POST);
 		}
+
 		/*接control吐出來的資料*/
 		$ControlRet = array();
 		/*檢查function是否在coltrol中*/
@@ -60,6 +72,7 @@ class LibBoot {
 
 		/*view start*/
 		if($this->view){
+			$ControlRet['setbody'] = $body;
 			include "view/View.php";
 			$View = new View($this->control .'/'.$this->view,$ControlRet);
 		}
@@ -67,9 +80,9 @@ class LibBoot {
 	}
 
 	/*尋找檔案是否在資料夾中($isFile是指是不是單純只有指檔案)*/
-	private function FileCk($FileArr, $FeileName, $isFile = true) {
+	private function FileCk($FileArr, $FeileName, $isFile = true){
 		$ret = 'error';
-		foreach ($FileArr as $value) {
+		foreach($FileArr as $value){
 			if (substr($value, 0, strrpos($value, ".")) == $FeileName and $isFile)
 				$ret = $FeileName;
 			if($value == $FeileName and !$isFile)
