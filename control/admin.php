@@ -8,6 +8,7 @@ class admin {
 
 	public function index(){
 		$this->UrlReLoad();
+		return $this->db->GetFlow();
 	}
 	public function Login($arr = false){
 		if(isset($_SESSION['Admin'])){
