@@ -23,7 +23,6 @@ foreach($MeHend as $key => $val){
 	if(!defined ($key))
 		define($key, $val);
 }
-
 /*set data base info*/
 
 include 'lib/LibDataBase.php';

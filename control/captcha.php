@@ -20,7 +20,6 @@ class captcha {
 			}
 			$key = $key['post']['captcha'];
 			if(isset($_SESSION['CaptchaPw'])){
-				// echo $_SESSION['CaptchaPw'].'---'.strtoupper($key);
 				if($this->LibCaptcha->CheckImg($_SESSION['CaptchaPw'],strtoupper($key))){
 					echo 1;
 				}else{

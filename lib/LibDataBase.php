@@ -40,13 +40,11 @@ class LibDataBase {
 		}
 		if ($this->dbtype == 'sqlite') {
 			$link = new PDO("sqlite:" . $this->dbname);
-			if (!$link) die ($error);
 		}
 		/*test link add by Sam 20140805*/
-		if($link)
-			// return $link;
+		if($link){
 			$this->DBLink = $link;
-		else{
+		}else{
 			echo 'DB link is false.';
 			exit;
 		}
@@ -55,14 +53,15 @@ class LibDataBase {
 	/*測試連線*/
 	private function CheckDataBaseLink($host, $port) {
 		$ch_ini_display = (ini_get('display_errors') == 1);
-		if ($ch_ini_display) /*判斷ini的display errors的設定*/
+		if ($ch_ini_display){/*判斷ini的display errors的設定*/
 			ini_set('display_errors', 0); /*設定連線錯誤時不要display errors*/
+		}
 		$x = fsockopen(gethostbyname($host), $port, $errno, $errstr, 1);
 		if ($ch_ini_display)
 			ini_set('display_errors', 1); /*將ini的display error設定改回來*/
-		if (!$x)/*測試連線*/
+		if (!$x){/*測試連線*/
 			return false;
-		else {
+		}else{
 			fclose($x);
 			return true;
 		}
@@ -96,8 +95,9 @@ class LibDataBase {
 	public function Del($table, $req = '') {
 		/*DELETE FROM [TABLE NAME] WHERE 條件;*/
 		$table = $this->comb(',',$table);
-		if ($req != '')
+		if ($req != ''){
 			$req = 'where ' . $req;
+		}
 		$sql = "DELETE FROM $table $req;";
 		return $sql;
 	}
@@ -148,8 +148,9 @@ class LibDataBase {
 
 	/*共用函式*/
 	public function ValAddTip($arr,$tip="'"){
-		if(!is_array($arr))
+		if(!is_array($arr)){
 			return $tip.$arr.$tip;
+		}
 		foreach($arr as $key =>$value){
 			$arr[$key] = "$tip$value$tip";
 		}
@@ -175,8 +176,9 @@ class LibDataBase {
 
 	public function ValDecode($arr){
 		if(is_array($arr)){
-			foreach($arr as $key2 => $value2)
+			foreach($arr as $key2 => $value2){
 				$arr[$key2] = $this->ValDecode($value2);
+			}
 		}else{
 			$arr = str_replace(array('@&4', '@&3', '@&2', '@&1', '@&5'), array(">", "<", '"', "'", "&"), stripslashes($arr));
 		}
@@ -184,8 +186,9 @@ class LibDataBase {
 	}
 	public function ValEncode($arr) {
 		if (is_array($arr)) {
-			foreach ($arr as $key => $value)
+			foreach ($arr as $key => $value){
 				$arr[$key] = $this->CheckInput($value);
+			}
 		} else {
 			$arr = str_replace(array("&", "'", '"', "<", ">"), array('@&5', '@&1', '@&2', '@&3', '@&4'), $arr);
 		}
