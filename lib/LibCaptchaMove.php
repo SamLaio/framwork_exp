@@ -1,9 +1,6 @@
 <?php
 class LibCaptchaMove {
-	private $QArr;
-
-	function __construct(){
-		$this->QArr = array(
+	private $QArr = array(
 			array('0+0','0'),
 			array('1+1','2'),
 			array('2+2','4'),
@@ -29,10 +26,14 @@ class LibCaptchaMove {
 			array('10x10','100')/*,
 			array('一 加 一','100')*/
 		);
+
+	function __construct(){
+		/*$this->QArr*/
 	}
 
 	public function SetCaptcha(){
-		$this->CreateImg($this->QArr[array_rand($this->QArr)]);
+		$_SESSION['CaptchaMove'] = array_rand($this->QArr,3);
+		$this->CreateImg($_SESSION['CaptchaMove'][0]]);
 	}
 	public function CreateImg($num){
 		/*產生圖檔, 及定義顏色*/
