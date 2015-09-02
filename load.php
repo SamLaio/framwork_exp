@@ -7,9 +7,10 @@ if(!isset($_SESSION['SiteUrl'])){
 	$_SESSION['SiteUrl'] = $port . $_SERVER['HTTP_HOST'] . $UrlBase[0];
 }
 $url = array();
-foreach(explode('/',$UrlBase[1]) as $val){
-	if($val != '')
-		$url[] = $val;
+if(isset($UrlBase[1])){
+	if(trim($UrlBase[1],'/') != ''){
+		$url = explode('/',trim($UrlBase[1],'/'));
+	}
 }
 /*set data base info*/
 $MeHend = array(
